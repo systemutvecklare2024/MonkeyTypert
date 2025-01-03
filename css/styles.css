@@ -1,0 +1,78 @@
+.root {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.container {
+    padding: 2rem 2rem;
+    box-sizing: border-box;
+}
+
+.statistics {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#typingBox {
+    height: 150px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 24px;
+    overflow:visible clip;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    box-sizing: border-box;
+    width: 40rem;
+}
+
+span.highlight {
+    color: blue;
+    font-weight: bold;
+}
+
+.correct {
+    color: green;
+}
+.incorrect {
+    color: red;
+}
+
+#currentKeyDisplay {
+    font-size: 6rem;
+}
+
+@keyframes cursor-blink {
+    0% {
+        opacity: 0;
+    }
+}
+
+table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+tbody {
+    display: flex;
+    position: relative;
+    align-items: stretch;
+}
+
+tr {
+    display: flex;
+    flex-basis: 33.33333333%;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+th, td {
+    flex-basis: 100%;
+    text-align: left;
+    display: flex;
+    padding: 2px;
+    
+  }
+  th {
+    font-weight: bold;
+  }
