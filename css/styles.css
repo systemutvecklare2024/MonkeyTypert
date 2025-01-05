@@ -10,7 +10,7 @@
 .statistics {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between  ;
 }
 
 #typingBox {
@@ -22,7 +22,11 @@
     overflow-y: auto;
     white-space: pre-wrap;
     box-sizing: border-box;
-    width: 40rem;
+    width: 43rem;
+}
+
+.row {
+    margin: 4px;
 }
 
 span.highlight {
@@ -35,6 +39,9 @@ span.highlight {
 }
 .incorrect {
     color: red;
+}
+.future {
+    color: gray;
 }
 
 #currentKeyDisplay {
