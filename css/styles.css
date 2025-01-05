@@ -1,10 +1,14 @@
-.root {
-    font-family: 'Courier New', Courier, monospace;
-}
-
 .container {
-    padding: 2rem 2rem;
+    font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    padding: 0 2rem 2rem;
     box-sizing: border-box;
+    width: 46rem;
+    margin: 0 auto;
+    background-color: #f0f0f0;
 }
 
 .statistics {
@@ -12,18 +16,38 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+.button-container {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.info > p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2rem;
 }
 
 #typingBox {
     height: 150px;
     border: 1px solid #ccc;
     padding: 10px;
-    font-size: 24px;
+    font-size: 18px;
     overflow: visible clip;
     overflow-y: auto;
     white-space: pre-wrap;
     box-sizing: border-box;
-    width: 43rem;
+    width: 100%;
 }
 
 .row {
@@ -48,13 +72,20 @@ span.highlight {
 }
 
 #currentKeyDisplay {
-    font-size: 6rem;
-}
-
-@keyframes cursor-blink {
-    0% {
-        opacity: 0;
-    }
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #4caf50;
+    padding: 10px 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 10px auto;
+    width: 3ch;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 table {

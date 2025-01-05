@@ -1,32 +1,72 @@
 "use strict";
 
 jQuery(function () {
+    // Constants
+    
     const filePath = 'data/words.txt';
+    const maxCharactersPerRow = 59;
+    const hideAfterAmountOfRows = 1;
+    const amountOfWordsToLoad = 25;
 
+    // JQuery elements
     const currentKeyDisplay = $("#currentKeyDisplay")
     const typingBox = $("#typingBox");
     const elapsedTimeDisplay = $("#elapsedTime");
     const wordCountDisplay = $("#wordCount");
     const wordsPerMinuteDisplay = $("#wordsPerMinuteDisplay");
     const wrongCharacterDisplay = $("#wrongCharacterDisplay");
+    const resetButton = $("#resetButton");
+    const startButton = $("#startButton");
+    const stopButton = $("#stopButton");
 
+    resetButton.on("click", reset);
+    startButton.on("click", start);
+    stopButton.on("click", stop);
+
+
+    let rows = [];
     let started = false;
     let isComplete = false;
     let incorrectTimeout = null;
     let timer = null;
     let startTime = null;
     let wrongCharacters = 0;
-    
-    const maxCharactersPerRow = 64;
-    const rows = [];
-    const hideAfterAmountOfRows = 1;
-    const amountOfWordsToLoad = 25;
 
     let currentWordIndex = 0;
     let currentCharacterIndex = 0;
     let currentRowIndex = 0;
 
+    function reset() {
+        if( started) {
+            stopTimer();
+        }
 
+        currentWordIndex = 0;
+        currentCharacterIndex = 0;
+        currentRowIndex = 0;
+        wrongCharacters = 0;
+        isComplete = false;
+        started = false;
+        stopTimer();
+        elapsedTimeDisplay.text(0);
+        wordCountDisplay.text(0);
+
+        populateRowsAndRender();
+    }
+
+    function stop() {
+        stopTimer();
+        isComplete = true;
+    }
+
+    function start() {
+        if(started || isComplete) {
+            alert("Test finished, you need to reset to start a new test");
+            return;
+        }
+
+        startTimer();
+    }
 
     function initializeRows(words) {
         rows.length = 0;
@@ -186,19 +226,21 @@ jQuery(function () {
             currentCharacterIndex++;
 
             if (currentCharacterIndex === currentWord.length) {
-                console.log("Completed word!")
                 currentCharacterIndex = 0;
                 currentWordIndex++;
             }
             if (currentWordIndex === calculateAbsoluteWordIndex(currentRowIndex + 1, 0)) {
-                console.log("finished a row!!!")
                 currentRowIndex++;
                 fadeOutRow(currentRowIndex - hideAfterAmountOfRows);
 
                 if(currentRowIndex === rows.length) {
                     stopTimer();
                     isComplete = true;
-                    alert("Finished!")
+
+                    alert("Finished!\n\n" +
+                        "You finished with " + wordsPerMinuteDisplay.text() + " words per minute\n" +
+                        "You got " + wrongCharacters + " typos\n\n" +
+                        "Press reset to start a new test");
                 }
             }
 
@@ -259,15 +301,19 @@ jQuery(function () {
         timer = null;
     }
 
-    loadWords()
-        .then(fetchedWords => {
-            //words = fetchedWords;
-            initializeRows(fetchedWords)
-            renderText();
-        })
-        .catch(error => {
-            console.error("Error loading words:", error);
-            alert("Error loading words");
-        });
+    function populateRowsAndRender() {
+        loadWords()
+            .then(fetchedWords => {
+                //words = fetchedWords;
+                initializeRows(fetchedWords)
+                renderText();
+            })
+            .catch(error => {
+                console.error("Error loading words:", error);
+                alert("Error loading words");
+            });
+    }
+
+    populateRowsAndRender();
 })
 
