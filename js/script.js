@@ -1,6 +1,6 @@
 "use strict";
 
-$(document).ready(function () {
+jQuery(function () {
     const filePath = 'data/words.txt';
 
     const currentKeyDisplay = $("#currentKeyDisplay")
@@ -19,6 +19,8 @@ $(document).ready(function () {
     
     const maxCharactersPerRow = 64;
     const rows = [];
+    const hideAfterAmountOfRows = 1;
+    const amountOfWordsToLoad = 25;
 
     let currentWordIndex = 0;
     let currentCharacterIndex = 0;
@@ -28,7 +30,7 @@ $(document).ready(function () {
 
     function initializeRows(words) {
         rows.length = 0;
-        let currentRow = { index: 0, words: [], characterCount: 0 };
+        let currentRow = { index: 0, words: [], characterCount: 0, fading: false, hidden: false };
 
         words.forEach(word => {
             // Get added space if there is a word infront of it
@@ -40,7 +42,7 @@ $(document).ready(function () {
                 currentRow.characterCount += wordLengthWithSpace;
             } else {
                 rows.push(currentRow)
-                currentRow = { index: rows.length, words: [word], characterCount: word.length }
+                currentRow = { index: rows.length, words: [word], characterCount: word.length, fading: false, hidden: false }
             }
         });
 
@@ -69,7 +71,10 @@ $(document).ready(function () {
             }
         }).join(" ")
 
-        return `<p class="row">${rowHtml}</p>`;
+        const fadeOut = row.fading ? " fade-out" : "";
+        const hidden = row.hidden ? " hidden" : "";
+
+        return `<p class="row${fadeOut}${hidden}" data-index="${row.index}">${rowHtml}</p>`;
     }
 
     function calculateAbsoluteWordIndex(rowIndex, wordIndex) {
@@ -98,8 +103,22 @@ $(document).ready(function () {
                 }).join("");
     }
 
+    function fadeOutRow(rowIndex) {
+        console.log("Fading out row", rowIndex);
+        if (rowIndex >= 0 && rowIndex < rows.length) {
+            const row = rows[rowIndex];
+            row.fading = true;
+            setTimeout(() => {
+                row.fading = false;
+                row.hidden = true;
+                renderText();
+            }, 500);
+        }
+
+    }
+
     function renderText() {
-        rows.forEach((row) => {
+        rows.forEach((row, index) => {
             row.renderedHtml = generateRowHtml(row);
         })
 
@@ -129,7 +148,7 @@ $(document).ready(function () {
                 .then(data => {
 
                     const words = data.split("\r\n");
-                    const randomWords = shuffleArray(words).slice(0, 15);
+                    const randomWords = shuffleArray(words).slice(0, amountOfWordsToLoad);
                     resolve(randomWords);
                 })
                 .catch(error => {
@@ -174,6 +193,7 @@ $(document).ready(function () {
             if (currentWordIndex === calculateAbsoluteWordIndex(currentRowIndex + 1, 0)) {
                 console.log("finished a row!!!")
                 currentRowIndex++;
+                fadeOutRow(currentRowIndex - hideAfterAmountOfRows);
 
                 if(currentRowIndex === rows.length) {
                     stopTimer();

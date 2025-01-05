@@ -10,7 +10,8 @@
 .statistics {
     display: flex;
     align-items: center;
-    justify-content: space-between  ;
+    justify-content: space-between;
+    margin-bottom: 1rem;
 }
 
 #typingBox {
@@ -18,7 +19,7 @@
     border: 1px solid #ccc;
     padding: 10px;
     font-size: 24px;
-    overflow:visible clip;
+    overflow: visible clip;
     overflow-y: auto;
     white-space: pre-wrap;
     box-sizing: border-box;
@@ -37,9 +38,11 @@ span.highlight {
 .correct {
     color: green;
 }
+
 .incorrect {
     color: red;
 }
+
 .future {
     color: gray;
 }
@@ -73,13 +76,24 @@ tr {
     align-items: flex-start;
 }
 
-th, td {
+th,
+td {
     flex-basis: 100%;
     text-align: left;
     display: flex;
     padding: 2px;
-    
-  }
-  th {
+
+}
+
+th {
     font-weight: bold;
-  }
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+.hidden {
+    display: none;
+}
