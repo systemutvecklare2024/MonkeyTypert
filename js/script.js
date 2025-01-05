@@ -3,10 +3,10 @@
 jQuery(function () {
     // Constants
     
-    const filePath = 'data/words.txt';
+    const filePath = 'data/common-words.txt';
     const maxCharactersPerRow = 59;
     const hideAfterAmountOfRows = 1;
-    const amountOfWordsToLoad = 25;
+    const amountOfWordsToLoad = 50;
 
     // JQuery elements
     const currentKeyDisplay = $("#currentKeyDisplay")
