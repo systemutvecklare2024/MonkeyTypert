@@ -1,7 +1,7 @@
 "use strict";
 
 $(document).ready(function () {
-    const filePath = 'js/words.txt';
+    const filePath = 'data/words.txt';
 
     const currentKeyDisplay = $("#currentKeyDisplay")
     const typingBox = $("#typingBox");
